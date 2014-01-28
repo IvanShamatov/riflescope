@@ -18,6 +18,7 @@ module Rifle
     end
 
     get '/:lang' do
+      headers('Access-Control-Allow-Origin' => "*")
       redis = Rifle.redis
       resp = redis.get(params[:lang])
       if resp.nil?
