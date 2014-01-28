@@ -1,0 +1,7 @@
+source 'https://rubygems.org'
+
+# gem "goliath", "~> 1.0"
+gem "eventmachine"
+gem "hiredis", "~> 0.4.5"
+gem "redis",   "~> 3.0.1"
+gem "em-http-request"
