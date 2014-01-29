@@ -23,17 +23,19 @@ module Rifle
       resp = redis.get(params[:lang])
       if resp.nil?
         http = EM::HttpRequest.new("http://hantim.ru/jobs.json").get( query: {'q' => params[:lang]} )
-        http.callback do 
-          resp = http.response
+        puts "Request to get #{params[:lang]} vacancies"
+        resp = http.callback do 
+          response = http.response
           redis.pipelined do
-            redis.set http.req.query["q"], resp
+            redis.set http.req.query["q"], response
             redis.incr 'counter'
           end
-          resp
         end
+        puts resp.inspect
       else
         resp
       end
+      resp
     end
  
   end

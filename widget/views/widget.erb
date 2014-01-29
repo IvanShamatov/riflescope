@@ -2,20 +2,32 @@
   <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
-      $.getJSON( "http://localhost:8000/ruby", function( data ) {
-        var items = [];
-        $.each( data, function( key, val ) {
-          items.push( "<tr><td>"+val.title + "</td></tr>" );
+      var getVacancies = function(str) {
+        $.getJSON( "http://localhost:8000/"+str, function( data ) {
+          console.log(data);
+          var items = [];
+          $.each( data, function( key, val ) {
+            items.push( "<li>" + val.title + ": " + val.location + "</li>" );
+          });
+         
+          $( "<ul/>", {
+            "class": "my-new-list",
+            html: items.join( "" )
+          }).appendTo( "body" );
         });
-       
-        $( "<ul/>", {
-          "class": "my-new-list",
-          html: items.join( "" )
-        }).appendTo( "body" );
+      }
+
+      $(document).ready(function(){
+        $("input").keypress(function(e) {
+          if (e.which == 13) {
+            e.preventDefault();
+            getVacancies(this.value);
+          }
+        })
       });
     </script>
   </head>
   <body>
-    
+    <input type="text" id="search-field"></input>
   </body>
 </html>
